@@ -4,7 +4,32 @@ import Header from './Header';
 import {useState, useEffect} from 'react';
 import {from, observable} from 'rxjs';
 import {filter, mergeMap, delay, map} from 'rxjs/operators';
+import { fromEvent, interval, merge, noop, NEVER } from 'rxjs';
+import {  mapTo, scan, startWith, switchMap, tap } from 'rxjs/operators';
 
+
+// WHERE YOU Stoped
+// const events$ = merge(
+
+// )
+
+
+// const stopWatch$ = events$.pipe(
+//   startWith({
+//     count: false,
+//     value: 0
+//   }),
+//   scan((accumulator, current) => {
+//     return accumulator + current
+//   })
+// )
+//////////////
+
+// Just for test 
+const doIt = (a) => {
+  console.log(a)
+}
+// Just for test 
 
 let numbersObservable = from([1, 2, 3,  4, 5]);
 let squaredNumbers = numbersObservable.pipe(
@@ -34,38 +59,12 @@ function App() {
       <Display currentTime={currentNumber}/>
       <div className='buttons'>
         <button>Start/Stop</button>
-        <button>Wait</button>
+        <button onClick={() => doIt(8)}>Wait</button>
         <button>Reset</button>
       </div>
     </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const stopwatch$ = new Observable(observer => {
 //       let secondsPassed = 0;
