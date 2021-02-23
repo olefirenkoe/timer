@@ -3,15 +3,24 @@ import './App.css';
 import Header from './Header';
 import {useState, useEffect} from 'react';
 import {from, observable} from 'rxjs';
-import {filter, mergeMap, delay, map} from 'rxjs/operators';
-import { fromEvent, interval, merge, noop, NEVER } from 'rxjs';
+import {filter,  mergeMap, delay, map} from 'rxjs/operators';
+import { fromEvent, timer, interval, merge, noop, NEVER } from 'rxjs';
 import {  mapTo, scan, startWith, switchMap, tap } from 'rxjs/operators';
 
 
-// WHERE YOU Stoped
-// const events$ = merge(
+// const start = (a) => {
+//   return a;
+// }
 
-// )
+// const reset = (b) => {
+//   return b;
+// }
+
+
+// const events$ = merge(
+//   mapTo(start()),
+//   mapTo(reset())
+// );
 
 
 // const stopWatch$ = events$.pipe(
@@ -23,19 +32,16 @@ import {  mapTo, scan, startWith, switchMap, tap } from 'rxjs/operators';
 //     return accumulator + current
 //   })
 // )
-//////////////
+// //////////////
 
-// Just for test 
-const doIt = (a) => {
-  console.log(a)
-}
-// Just for test 
+// console.log(events$.count)
 
-let numbersObservable = from([1, 2, 3,  4, 5]);
+
+let numbersObservable = interval(1000);
 let squaredNumbers = numbersObservable.pipe(
-  filter(val => val > 2),
-  mergeMap(val => from([val]).pipe(delay(1000*val))),
-  map(val => val * val)
+  startWith(0)
+  // mergeMap(val => from([val]).pipe(delay(1000*val))),
+  // map(val => val * val)
 );
 
 const useObservable = (observable, setter) => {
@@ -50,6 +56,7 @@ const useObservable = (observable, setter) => {
 
 function App() {
   const [currentNumber, setCurrentNumber] = useState(0);
+  // const [timeOn, setTimeOn] = useState(false);
 
   useObservable(squaredNumbers, setCurrentNumber);
 
@@ -58,8 +65,8 @@ function App() {
       <Header/>
       <Display currentTime={currentNumber}/>
       <div className='buttons'>
-        <button>Start/Stop</button>
-        <button onClick={() => doIt(8)}>Wait</button>
+        <button>Start</button>
+        <button>Wait</button>
         <button>Reset</button>
       </div>
     </div>
